@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>San Luis Potosi</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-image: url('/placeholder.svg?height=300&width=1200');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        h1 {
+            font-size: 3rem;
+            color: #ff6b6b;
+            text-shadow: 2px 2px 4px #000000;
+            text-align: center;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .section {
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+        }
+        h2 {
+            color: #ff9b9b;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .gallery img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        footer {
+            background-color: #2a2a2a;
+            color: #f0f0f0;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Celebración del Día de Muertos</h1>
+    </header>
+
+    <div class="container">
+        <section class="section">
+            <h2>Como se celebra</h2>
+            <img src="/placeholder.svg?height=400&width=800" alt="Altar del Día de Muertos">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </section>
+
+        <section class="section">
+            <h2>Tradiciones</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <div class="gallery">
+                <img src="/placeholder.svg?height=200&width=250" alt="Calaveras de azúcar">
+                <img src="/placeholder.svg?height=200&width=250" alt="Flores de cempasúchil">
+                <img src="/placeholder.svg?height=200&width=250" alt="Ofrenda tradicional">
+                <img src="/placeholder.svg?height=200&width=250" alt="Pan de muerto">
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Eventos</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <img src="/placeholder.svg?height=300&width=800" alt="Desfile del Día de Muertos">
+        </section>
+    </div>
+</body>
+</html>

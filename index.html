@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Interactivo de México - Día de Muertos</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #041D3B;
+            color: #F2DE77;
+        }
+        h1 {
+            text-align: center;
+            color: #D96A29;
+            text-shadow: 2px 2px 4px #000000;
+            margin: 0;
+            padding: 20px;
+        }
+        .main-container {
+            display: flex;
+            height: calc(100vh - 90px);
+        }
+        .column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 1px solid #D9310B;
+        }
+        .map-container {
+            flex: 4;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        #map {
+            height: 100%;
+            border: 3px solid #D9310B;
+            border-radius: 10px;
+        }
+        .text-area {
+            flex: 1;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #D96A29;
+            border-radius: 5px;
+            resize: none;
+            background-color: rgba(4, 29, 59, 0.8);
+            color: #F2DE77;
+        }
+        .text-area::placeholder {
+            color: #F2DE77;
+            opacity: 0.7;
+        }
+        .image {
+            width: 100%;
+            height: 200px;
+            margin-top: 20px;
+            border: 2px solid #D9310B;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+        .leaflet-popup-content-wrapper {
+            background-color: #041D3B;
+            color: #F2DE77;
+            border: 2px solid #D9310B;
+        }
+        .leaflet-popup-tip {
+            background-color: #D9310B;
+        }
+        .custom-tooltip {
+            background-color: rgba(4, 29, 59, 0.9);
+            border: 2px solid #D96A29;
+            border-radius: 5px;
+            padding: 10px;
+            color: #F2DE77;
+            font-size: 14px;
+            max-width: 200px;
+        }
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+            .column {
+                height: 30vh;
+            }
+            .map-container {
+                height: 40vh;
+            }
+            #map {
+                height: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Mapa Interactivo de México - Día de Muertos</h1>
+    <div class="main-container">
+        <div class="column" id="leftColumn">
+            <h1>¿Que es el dia de muertos?</h1><textarea class="text-area" readonly placeholder="Información del estado (lado izquierdo)">
+                El Día de Muertos es una festividad de origen prehispánico profundamente enraizada en la cultura mexicana que celebra, con una devoción singular y exuberante, la creencia de que las almas de los seres queridos fallecidos regresan temporalmente al mundo de los vivos para compartir, a través de la ofrenda y el recuerdo, el cariño que los unía a sus familiares y amigos. Este ritual, envuelto en un simbolismo complejo y una estética cargada de color y detalles significativos, encuentra su expresión en altares repletos de flores de cempasúchil, veladoras, fotografías, calaveritas de azúcar y alimentos que alguna vez deleitaron el paladar de quienes han partido.
+
+                La celebración, que abarca los días 1 y 2 de noviembre, representa una profunda manifestación de la cosmovisión mesoamericana, en la cual la vida y la muerte son concebidas no como opuestos, sino como partes de un ciclo interminable y armonioso. Este día constituye una ocasión trascendental para preservar la identidad cultural, manifestar el sincretismo de creencias indígenas y católicas, y consolidar los lazos de afecto y memoria que trascienden el tiempo, en un evento donde lo sacro y lo profano se entrelazan en un tributo a la eternidad de la esencia humana.
+                
+                La celebración del Día de Muertos es una manifestación cultural y espiritual que trasciende las barreras de la temporalidad, abarcando dimensiones simbólicas y filosóficas que ilustran la concepción cíclica de la existencia en la cosmovisión mesoamericana. Esta visión sostiene que la vida, la muerte y la trascendencia son fases interconectadas de una realidad eterna, en la cual los seres humanos, al igual que el maíz que alimenta a las comunidades, nacen, crecen, mueren y renacen en un ciclo interminable. 
+
+                La preparación de las ofrendas, que es un acto colectivo y minucioso, encierra una profundidad extraordinaria, pues en cada elemento colocado sobre el altar reside una intención espiritual: el cempasúchil, con su vibrante color dorado, guía a las almas en su viaje de regreso; el copal, en su fragante humo, purifica el ambiente; y el pan de muerto, con sus formas y diseños únicos, simboliza tanto la efimeridad de la vida como el deseo de reunir, en un gesto ritual, los sabores compartidos en vida.
+
+                </textarea>
+            <img id="leftImage" class="image" src="" alt="Imagen izquierda del Día de Muertos">
+        </div>
+        
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+        
+        <div class="column" id="rightColumn">
+            <h1>Orígenes históricos del Día de Muertos</h1><textarea class="text-area" readonly placeholder="Tradiciones locales (lado derecho)">
+                Los orígenes históricos del Día de Muertos se remontan a las antiguas civilizaciones mesoamericanas, como los mexicas, mayas, purépechas, y totonacas, que compartían una visión cíclica de la vida y la muerte. En estas culturas, la muerte no era vista como un final definitivo, sino como una fase en un ciclo constante de renacimiento. Creían que, al morir, las almas de las personas iban a diversos lugares según el tipo de muerte que hubieran tenido y que, con el tiempo, podrían regresar al mundo de los vivos.
+
+                En el caso de los mexicas, por ejemplo, se realizaban rituales dedicados a la diosa Mictecacihuatl, conocida como la "Señora de la Muerte" y consorte de Mictlantecuhtli, el señor del inframundo. Este tipo de ceremonias incluían altares y ofrendas para honrar a los muertos y asegurarse de que sus almas recibieran sustento en su travesía. Estos rituales tenían lugar en distintas épocas del año, especialmente en el noveno mes del calendario solar mexica, que coincidía con los meses de julio y agosto en el calendario actual.
+                
+                Con la llegada de los españoles en el siglo XVI, esta visión indígena de la muerte comenzó a fusionarse con las tradiciones católicas europeas, en particular con el Día de Todos los Santos y el Día de los Fieles Difuntos, celebrados el 1 y 2 de noviembre. La festividad se trasladó a estas fechas, y el sincretismo de ambas creencias dio como resultado la forma en que conocemos actualmente el Día de Muertos: una mezcla de rituales prehispánicos y ceremonias cristianas que celebran la vida de los fallecidos y su regreso temporal al mundo de los vivos.
+                
+                Con el tiempo, esta tradición se expandió y evolucionó en cada región de México, desarrollando elementos únicos según las costumbres locales. La UNESCO reconoció en 2008 esta festividad como Patrimonio Cultural Inmaterial de la Humanidad, resaltando su importancia como un símbolo de identidad cultural y espiritualidad que sigue vigente hasta nuestros días.</textarea>
+            <img id="rightImage" class="image" src="" alt="Imagen derecha del Día de Muertos">
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Definir los límites de México (ajustados para centrarse mejor)
+        var southWest = L.latLng(14.5, -117);
+        var northEast = L.latLng(32.7, -86);
+        var bounds = L.latLngBounds(southWest, northEast);
+
+        var map = L.map('map', {
+            center: [23.6345, -102.5528], // Coordenadas centrales de México
+            zoom: 5.5,
+            minZoom: 5.5,
+            maxZoom: 8,
+            maxBounds: bounds,
+            maxBoundsViscosity: 1.0
+        });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Icono personalizado
+        var calaveraIcon = L.icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+
+        // Datos de los estados
+        var estados = [
+            {nombre: "Aguascalientes", lat: 21.8818, lon: -102.2916, info: "Festival de Calaveras", pagina: "aguascalientes.html"},
+            {nombre: "Baja California", lat: 30.8406, lon: -115.2838, info: "Altares en Tijuana", pagina: "baja-california.html"},
+            {nombre: "Baja California Sur", lat: 26.0444, lon: -111.6661, info: "Celebración en La Paz", pagina: "baja-california-sur.html"},
+            {nombre: "Campeche", lat: 19.8301, lon: -90.5349, info: "Hanal Pixán maya", pagina: "campeche.html"},
+            {nombre: "Chiapas", lat: 16.7569, lon: -93.1292, info: "Día de Muertos en San Juan Chamula", pagina: "chiapas.html"},
+            {nombre: "Chihuahua", lat: 28.6353, lon: -106.0889, info: "Altares en Ciudad Juárez", pagina: "chihuahua.html"},
+            {nombre: "Coahuila", lat: 27.0587, lon: -101.7068, info: "Desfile de Catrinas en Torreón", pagina: "coahuila.html"},
+            {nombre: "Colima", lat: 19.2452, lon: -103.7241, info: "Altares en el centro histórico", pagina: "colima.html"},
+            {nombre: "Durango", lat: 24.0277, lon: -104.6532, info: "Recorrido nocturno en panteones", pagina: "durango.html"},
+            {nombre: "Estado de México", lat: 19.4969, lon: -99.7233, info: "Feria de la Catrina en Metepec", pagina: "estado-de-mexico.html"},
+            {nombre: "Guanajuato", lat: 21.0190, lon: -101.2574, info: "Festival La Catrina en León", pagina: "guanajuato.html"},
+            {nombre: "Guerrero", lat: 17.5516, lon: -99.5003, info: "Día de Muertos en Taxco", pagina: "guerrero.html"},
+            {nombre: "Hidalgo", lat: 20.1224, lon: -98.7376, info: "Xantolo en la Huasteca", pagina: "hidalgo.html"},
+            {nombre: "Jalisco", lat: 20.6595, lon: -103.3494, info: "Desfile de Catrinas en Guadalajara", pagina: "jalisco.html"},
+            {nombre: "Michoacán", lat: 19.5665, lon: -101.7068, info: "Noche de Muertos en Pátzcuaro", pagina: "michoacan.html"},
+            {nombre: "Morelos", lat: 18.6813, lon: -99.1013, info: "Ofrendas en Tepoztlán", pagina: "morelos.html"},
+            {nombre: "Nayarit", lat: 21.7514, lon: -104.8455, info: "Altares en Tepic", pagina: "nayarit.html"},
+            {nombre: "Nuevo León", lat: 25.5922, lon: -99.9962, info: "Festival de Calaveras en Monterrey", pagina: "nuevo-leon.html"},
+            {nombre: "Oaxaca", lat: 17.0732, lon: -96.7266, info: "Comparsas en el centro histórico", pagina: "oaxaca.html"},
+            {nombre: "Puebla", lat: 19.0414, lon: -98.2063, info: "Altares monumentales en Huaquechula", pagina: "puebla.html"},
+            {nombre: "Querétaro", lat: 20.5888, lon: -100.3899, info: "Desfile de Catrinas", pagina: "queretaro.html"},
+            {nombre: "Quintana Roo", lat: 19.1817, lon: -88.4791, info: "Hanal Pixán en Cancún", pagina: "quintana-roo.html"},
+            {nombre: "San Luis Potosí", lat: 22.1565, lon: -100.9855, info: "Xantolo en la Huasteca Potosina", pagina: "san-luis-potosi.html"},
+            {nombre: "Sinaloa", lat: 25.1721, lon: -107.4795, info: "Altares en Culiacán", pagina: "sinaloa.html"},
+            {nombre: "Sonora", lat: 29.2972, lon: -110.3309, info: "Día de Muertos Yaqui", pagina: "sonora.html"},
+            {nombre: "Tabasco", lat: 17.8409, lon: -92.6189, info: "Celebración en Villahermosa", pagina: "tabasco.html"},
+            {nombre: "Tamaulipas", lat: 23.7369, lon: -99.1411, info: "Altares en Ciudad Victoria", pagina: "tamaulipas.html"},
+            {nombre: "Tlaxcala", lat: 19.3139, lon: -98.2404, info: "Feria de la Catrina", pagina: "tlaxcala.html"},
+            {nombre: "Veracruz", lat: 19.1738, lon: -96.1342, info: "Xantolo en el norte del estado", pagina: "veracruz.html"},
+            {nombre: "Yucatán", lat: 20.7099, lon: -89.0943, info: "Hanal Pixán en Mérida", pagina: "yucatan.html"},
+            {nombre: "Zacatecas", lat: 22.7709, lon: -102.5832, info: "Festival de las Ánimas", pagina: "zacatecas.html"},
+            {nombre: "Ciudad de México", lat: 19.4326, lon: -99.1332, info: "Gran ofrenda en el Zócalo", pagina: "ciudad-de-mexico.html"}
+        ];
+
+        // Función para crear tooltips
+        function createCustomTooltip(state) {
+            return L.tooltip({
+                permanent: false,
+                direction: 'top',
+                className: 'custom-tooltip'
+            }).setContent(`<strong>${state.nombre}</strong><br>${state.info}`);
+        }
+
+        // Añadir marcadores
+        estados.forEach(function(estado) {
+            var marker = L.marker([estado.lat, estado.lon], {icon: calaveraIcon})
+                .addTo(map)
+                .bindTooltip(createCustomTooltip(estado))
+                .on('click', function() {
+                    window.location.href = estado.pagina;
+                });
+        });
+
+        // URLs de imágenes relacionadas con el Día de Muertos
+        const imageUrls = [
+            "https://plalla.com/wp-content/uploads/2023/10/portada-calavera-dia-de-muertos.webp",
+            "https://www.excelsior.com.mx/media/inside-the-note/pictures/2024/10/27/ofrenda_dia_de_muertos.png",
+            "https://www.gob.mx/cms/uploads/article/main_image/26574/proyecto-mixquic-mixquic3.jpg",
+            "https://www.credimejora.com/hubfs/dia-muertos-calavera.webp"
+        ];
+         // Función para cambiar las imágenes
+         function changeImages() {
+            const leftImg = document.getElementById('leftImage');
+            const rightImg = document.getElementById('rightImage');
+            
+            let leftIndex = imageUrls.indexOf(leftImg.src);
+            let rightIndex = imageUrls.indexOf(rightImg.src);
+            
+            leftIndex = (leftIndex + 1) % imageUrls.length;
+            rightIndex = (rightIndex + 1) % imageUrls.length;
+            
+            leftImg.src = imageUrls[leftIndex];
+            rightImg.src = imageUrls[rightIndex];
+
+         }
+
+        // Inicializar las imágenes
+        document.getElementById('leftImage').src = imageUrls[0];
+        document.getElementById('rightImage').src = imageUrls[1];
+        document.getElementById('leftImage').src = imageUrls[2];
+        document.getElementById('rightImage').src = imageUrls[3];
+        
+         // Cambiar las imágenes cada 5 segundos
+         setInterval(changeImages, 5000);
+
+    </script>
+</body>
+</html>

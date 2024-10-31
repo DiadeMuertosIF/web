@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jalisco</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-image: url('/placeholder.svg?height=300&width=1200');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        h1 {
+            font-size: 3rem;
+            color: #ff6b6b;
+            text-shadow: 2px 2px 4px #000000;
+            text-align: center;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .section {
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+        }
+        h2 {
+            color: #ff9b9b;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .gallery img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        footer {
+            background-color: #2a2a2a;
+            color: #f0f0f0;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Jalisco</h1>
+    </header>
+
+    <div class="container">
+        <section class="section">
+            <h2>Como se celebra</h2>
+            <img src="images/images (17).png" alt="Altar del Día de Muertos">
+            <p>En Jalisco, el Día de Muertos se celebra de manera festiva y colorida, especialmente en las ciudades de Guadalajara y en pueblos tradicionales. Durante el 1 y 2 de noviembre, las familias acuden a los panteones para limpiar y adornar las tumbas de sus seres queridos con flores de cempasúchil, velas y ofrendas.</p>
+        </section>
+
+        <section class="section">
+            <h2>Tradiciones</h2>
+            <p>La creación de altares de muertos en los hogares y en espacios públicos es una de las tradiciones más queridas en Jalisco. Los altares incluyen fotografías de los difuntos, veladoras, calaveritas de azúcar, papel picado y alimentos que los fallecidos disfrutaban en vida, como el pan de muerto y bebidas locales como el tequila.</p>
+            <div class="gallery">
+                <img src="images/images (28).png" alt="Calaveras de azúcar">
+                <img src="images/images (29).png" alt="Flores de cempasúchil">
+                <img src="images/images (30).png" alt="Ofrenda tradicional">
+                <img src="images/images (31).png" alt="Pan de muerto">
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Eventos</h2>
+            <p>En el pueblo de Tlaquepaque, famoso por su tradición artesanal, se llevan a cabo actividades como el montaje de altares comunitarios y concursos de disfraces, además de recorridos nocturnos por las calles empedradas donde se narran leyendas de la región. En escuelas y centros culturales, se organizan talleres para niños y adultos donde se enseña a hacer calaveras de azúcar, papel picado y otras decoraciones típicas, fortaleciendo la herencia cultural en las nuevas generaciones.</p>
+            <img src="images/images (32).png" alt="Desfile del Día de Muertos">
+        </section>
+    </div>
+</body>
+</html>
